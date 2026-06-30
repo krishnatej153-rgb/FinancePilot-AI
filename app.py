@@ -8,4 +8,26 @@ st.set_page_config(
 
 st.title("💰 FinancePilot AI")
 
-st.write("Welcome to FinancePilot AI!")
+st.subheader("AI Powered Personal Finance Advisor")
+
+st.markdown("---")
+
+st.write("""
+Welcome to FinancePilot AI.
+
+This application helps you:
+
+✅ Track Expenses
+
+✅ Analyze Spending
+
+✅ Upload Receipts
+
+✅ AI Financial Insights
+
+✅ Budget Planning
+
+✅ Spending Forecasting
+""")
+
+st.info("👈 Use the sidebar to navigate through the application.")
