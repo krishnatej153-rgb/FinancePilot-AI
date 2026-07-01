@@ -1,33 +1,36 @@
 import streamlit as st
 
+from components.sidebar import show_sidebar
+
+from views.Dashboard import show_dashboard
+from views.Expenses import show_expenses
+from views.Income import show_income
+from views.Analytics import show_analytics
+from views.AI_Assistant import show_ai
+from views.Settings import show_settings
+
 st.set_page_config(
     page_title="FinancePilot AI",
     page_icon="💰",
     layout="wide"
 )
 
-st.title("💰 FinancePilot AI")
+page = show_sidebar()
 
-st.subheader("AI Powered Personal Finance Advisor")
+if page == "Dashboard":
+    show_dashboard()
 
-st.markdown("---")
+elif page == "Expenses":
+    show_expenses()
 
-st.write("""
-Welcome to FinancePilot AI.
+elif page == "Income":
+    show_income()
 
-This application helps you:
+elif page == "Analytics":
+    show_analytics()
 
-✅ Track Expenses
+elif page == "AI Assistant":
+    show_ai()
 
-✅ Analyze Spending
-
-✅ Upload Receipts
-
-✅ AI Financial Insights
-
-✅ Budget Planning
-
-✅ Spending Forecasting
-""")
-
-st.info("👈 Use the sidebar to navigate through the application.")
+elif page == "Settings":
+    show_settings()
