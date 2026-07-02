@@ -1,11 +1,11 @@
 import streamlit as st
 
+from database.expense_operations import add_expense, get_expenses
+
+
 def show_expenses():
 
     st.title("💸 Expense Tracker")
-
-    if "expenses" not in st.session_state:
-        st.session_state.expenses = []
 
     with st.form("expense_form"):
 
@@ -36,14 +36,12 @@ def show_expenses():
 
     if submitted:
 
-        expense = {
-            "Amount": amount,
-            "Category": category,
-            "Description": description,
-            "Date": str(date)
-        }
-
-        st.session_state.expenses.append(expense)
+        add_expense(
+            amount,
+            category,
+            description,
+            str(date)
+        )
 
         st.success("Expense Added Successfully!")
 
@@ -51,10 +49,22 @@ def show_expenses():
 
     st.subheader("Saved Expenses")
 
-    if st.session_state.expenses:
+    expenses = get_expenses()
 
-        st.dataframe(st.session_state.expenses)
+    if expenses:
+
+        st.dataframe(
+            expenses,
+            column_config={
+                0: "ID",
+                1: "Amount",
+                2: "Category",
+                3: "Description",
+                4: "Date"
+            },
+            hide_index=True
+        )
 
     else:
 
-        st.info("No expenses added yet.")
+        st.info("No expenses found.")
