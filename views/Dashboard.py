@@ -1,4 +1,5 @@
 import streamlit as st
+
 from components.cards import metric_card
 from components.charts import show_chart
 
@@ -29,6 +30,6 @@ def show_dashboard():
 
     st.divider()
 
-    st.subheader("Recent Transactions")
+    st.subheader("🕒 Recent Transactions")
 
-    st.write("No transactions yet.")
+    st.info("No transactions yet.")
