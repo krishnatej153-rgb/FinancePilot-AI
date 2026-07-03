@@ -36,4 +36,20 @@ def get_recent_transactions():
 
     conn.close()
 
+    
+def get_category_expenses():
+
+    conn = get_connection()
+    cursor = conn.cursor()
+
+    cursor.execute("""
+        SELECT category, SUM(amount)
+        FROM expenses
+        GROUP BY category
+    """)
+
+    data = cursor.fetchall()
+
+    conn.close()
+
     return data
