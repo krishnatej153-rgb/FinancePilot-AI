@@ -8,17 +8,30 @@ def get_connection():
 
 
 def create_tables():
+
     conn = get_connection()
     cursor = conn.cursor()
 
+    # Expense Table
     cursor.execute("""
-    CREATE TABLE IF NOT EXISTS expenses(
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        amount REAL,
-        category TEXT,
-        description TEXT,
-        date TEXT
-    )
+        CREATE TABLE IF NOT EXISTS expenses(
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            amount REAL,
+            category TEXT,
+            description TEXT,
+            date TEXT
+        )
+    """)
+
+    # Income Table
+    cursor.execute("""
+        CREATE TABLE IF NOT EXISTS income(
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            amount REAL,
+            source TEXT,
+            description TEXT,
+            date TEXT
+        )
     """)
 
     conn.commit()
