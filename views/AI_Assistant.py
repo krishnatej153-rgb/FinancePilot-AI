@@ -6,38 +6,45 @@ from database.dashboard_operations import get_financial_summary
 
 def show_ai():
 
-    st.title("🤖 AI Financial Coach")
+    st.title("🤖 FinancePilot AI Coach")
+    if st.button("🗑️ Clear Chat"):
+        st.session_state.chat_history = []
+        st.rerun()
 
-    st.write(
-        "Ask questions about your finances and receive AI-powered advice."
+    if "chat_history" not in st.session_state:
+        st.session_state.chat_history = []
+
+    financial_summary = get_financial_summary()
+
+    for role, message in st.session_state.chat_history:
+
+        with st.chat_message(role):
+            st.markdown(message)
+
+    question = st.chat_input(
+        "Ask about your finances..."
     )
 
-    question = st.text_area(
-        "Ask your question",
-        placeholder="Example: How can I reduce my monthly expenses?"
-    )
+    if question:
 
-    if st.button("🚀 Generate Advice"):
+        st.session_state.chat_history.append(
+            ("user", question)
+        )
 
-        if question.strip() == "":
+        with st.chat_message("user"):
+            st.markdown(question)
 
-            st.warning("Please enter a question.")
+        with st.chat_message("assistant"):
 
-        else:
-
-            financial_summary = get_financial_summary()
-
-            with st.spinner("Analyzing your financial data..."):
+            with st.spinner("Analyzing your finances..."):
 
                 response = ask_gemini(
                     financial_summary,
                     question
                 )
 
-            st.success("AI Recommendation")
+                st.markdown(response)
 
-            st.write(response)
-
-            with st.expander("📊 Financial Summary Sent to AI"):
-
-                st.code(financial_summary)
+        st.session_state.chat_history.append(
+            ("assistant", response)
+        )
